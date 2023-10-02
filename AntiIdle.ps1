@@ -3,22 +3,36 @@
 # 最後に確認されたマウスカーソルの位置を保存。
 $lastKnownPosition = [System.Windows.Forms.Cursor]::Position
 
+$user32_mouse_event_signature = @"
+[DllImport("user32.dll", CharSet=CharSet.Auto, CallingConvention=CallingConvention.StdCall)]
+public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
+"@
+
+$MouseEvent =
+Add-Type -MemberDefinition $user32_mouse_event_signature -Name "MouseEvent" -Namespace Win32Functions -PassThru
+
 # 無限ループ。
 while ($true) {
     # 3分待機。
     Start-Sleep -Seconds (3 * 60)
-    # 現在のマウスカーソルの位置を取得。
+    # 現在のカーソルの位置を取得。
     $currentPosition = [System.Windows.Forms.Cursor]::Position
-    # マウスカーソルが動いていないか確認。
+    # カーソルが動いていないか確認。
     if ($lastKnownPosition.Equals($currentPosition)) {
+        # アイドル状態が続いているかもしれないことを確認。
+        # 少なくともカーソルは動いていないので、カーソルを動かしても害は無さそう。
         Write-Host "Recognized as idle."
-        # マウスカーソルを微妙に動かす。
+
+        # 座標を設定することでカーソルを動かす。
         [System.Windows.Forms.Cursor]::Position =
         New-Object System.Drawing.Point (
             ($currentPosition.X + 1),
             ($currentPosition.Y + 1))
-        # マウスカーソルを元の位置に戻す。
         [System.Windows.Forms.Cursor]::Position = $currentPosition
+
+        # イベントを発生することでカーソルを動かす。
+        $MouseEvent::mouse_event(0x0001, 1, 1, 0, 0)
+        $MouseEvent::mouse_event(0x0001, -1, -1, 0, 0)
     }
     else {
         Write-Host "Recognized as not idle."
