@@ -31,7 +31,7 @@ while ($true) {
         [System.Windows.Forms.Cursor]::Position = $currentPosition
 
         # イベントを発生することでカーソルを動かす。
-        $MouseEvent::mouse_event(0x0001, 1, 1, 0, 0)
+        $MouseEvent::mouse_event(0x0001,  1,  1, 0, 0)
         $MouseEvent::mouse_event(0x0001, -1, -1, 0, 0)
     }
     else {
