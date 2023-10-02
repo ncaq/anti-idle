@@ -13,8 +13,8 @@ Add-Type -MemberDefinition $user32_mouse_event_signature -Name "MouseEvent" -Nam
 
 # 無限ループ。
 while ($true) {
-    # 3分待機。
-    Start-Sleep -Seconds (3 * 60)
+    # 2分待機。
+    Start-Sleep -Seconds (2 * 60)
     # 現在のカーソルの位置を取得。
     $currentPosition = [System.Windows.Forms.Cursor]::Position
     # カーソルが動いていないか確認。
