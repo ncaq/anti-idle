@@ -3,13 +3,13 @@
 # 最後に確認されたマウスカーソルの位置を保存。
 $lastKnownPosition = [System.Windows.Forms.Cursor]::Position
 
-$user32_mouse_event_signature = @"
+$user32MouseEventSignature = @"
 [DllImport("user32.dll", CharSet=CharSet.Auto, CallingConvention=CallingConvention.StdCall)]
 public static extern void mouse_event(long dwFlags, long dx, long dy, long cButtons, long dwExtraInfo);
 "@
 
-$MouseEvent =
-Add-Type -MemberDefinition $user32_mouse_event_signature -Name "MouseEvent" -Namespace Win32Functions -PassThru
+$SetMouseEvent =
+Add-Type -MemberDefinition $user32MouseEventSignature -Name "SetMouseEvent" -Namespace Win32Functions -PassThru
 
 # 無限ループ。
 while ($true) {
@@ -31,8 +31,8 @@ while ($true) {
         [System.Windows.Forms.Cursor]::Position = $currentPosition
 
         # イベントを発生することでカーソルを動かす。
-        $MouseEvent::mouse_event(0x0001,  1,  1, 0, 0)
-        $MouseEvent::mouse_event(0x0001, -1, -1, 0, 0)
+        $SetMouseEvent::mouse_event(0x0001, +1, +1, 0, 0)
+        $SetMouseEvent::mouse_event(0x0001, -1, -1, 0, 0)
     }
     else {
         Write-Host "Recognized as not idle."
