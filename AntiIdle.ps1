@@ -11,6 +11,7 @@ while ($true) {
     $currentPosition = [System.Windows.Forms.Cursor]::Position
     # マウスカーソルが動いていないか確認。
     if ($lastKnownPosition.Equals($currentPosition)) {
+        Write-Host "Recognized as idle."
         # マウスカーソルを微妙に動かす。
         [System.Windows.Forms.Cursor]::Position =
         New-Object System.Drawing.Point (
@@ -18,6 +19,9 @@ while ($true) {
             ($currentPosition.Y + 1))
         # マウスカーソルを元の位置に戻す。
         [System.Windows.Forms.Cursor]::Position = $currentPosition
+    }
+    else {
+        Write-Host "Recognized as not idle."
     }
     # 現在の位置を次のループでの最後に確認された位置として保存。
     $lastKnownPosition = $currentPosition
