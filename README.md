@@ -1,2 +1,22 @@
 # anti-idle
-If it determines that the system has been idle for a certain period of time, it will attempt to release it.
+
+Windowsで一定時間カーソルの移動がない場合自動的にカーソルを動かして元に戻すプログラムです。
+
+自宅でデスクトップを使っているのにラップトップ向けの理不尽なポリシーが適応された場合の防衛術と考えています。
+
+# スタートアップ時にバックグラウンドで自動起動する方法
+
+Desktop以下に`git clone`なりで配置していることを前提にしています。
+そうじゃない場合は読み替えてください。
+
+`shell:startup`フォルダを開いて新規作成でショートカットを選択します。
+
+場所を、
+
+~~~
+%USERPROFILE%\Desktop\anti-idle\AntiIdle.vbs
+~~~
+
+と設定します。
+
+ショートカットの名前は何でも良いです。
