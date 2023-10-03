@@ -7,6 +7,6 @@ trim_trailing_whitespace = true
 insert_final_newline = true
 max_line_length = 120
 
-[*.ps1]
+[*.{bat,ps1,vbs}]
 charset = utf-8-bom
 end_of_line = crlf
